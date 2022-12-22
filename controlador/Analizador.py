@@ -23,21 +23,33 @@ class Analizador():
 
         temp_nombre = ""
         temp_no_terminal = ""
+        temp_terminales = ""
 
         for fila in _gramatica:
             # chr(txt) obtiene el chart
             for columna in fila:
 
                 if ord(columna) == 10 : # <[10: \n ]> Salto de linea.
+
+                    if count >= 4:
+                        pass
+                    
                     continue
                 
                 if ord(columna) == 37:  # <[37: % ]>. Finaliza gramatica.
 
-                    count = -1                      # Reiniciamos la gramatica.
-                    nombre.append(temp_nombre)      # guardamos los nombres.
-                    temp_nombre = ""                # reiniciamos el temporal, para poder almacenar nuevamente el nombre de la gramatica.
+                    count = -1                                  # Reiniciamos la gramatica.
+                    
+                    nombre.append(temp_nombre)                  # guardamos los nombres.
+                    temp_nombre = ""                            # reiniciamos el temporal, para poder almacenar nuevamente el nombre de la gramatica.
 
-                    continue                        # sale del for columan, y vuelve a iniciar con la siguiente fila.
+                    no_terminal.append(temp_no_terminal)        # guardamos los no terminales.
+                    temp_no_terminal = ""                       # reinciiamos el temporal, para poder almacenar nuevamente los no terminales de la gramatica.
+
+                    terminal.append(temp_terminales)            # guardamos los terminales.
+                    temp_terminales = ""                        # reinciiamos el temporal, para poder almacenar nuevamente los terminales de la gramatica.
+
+                    continue                                    # sale del for columan, y vuelve a iniciar con la siguiente fila.
 
                 
                 if count == 0:          # Nombre de archivo
@@ -46,10 +58,11 @@ class Analizador():
                 elif count == 1:        # No terminales     
                     
                     if ord(columna) != 44:          # <[44: , ]> 
-                        pass
+                        temp_no_terminal += chr(ord(columna))
 
                 elif count == 2:        # Terminales
-                    pass
+                    if ord(columna) != 44:          # <[44: , ]> 
+                        temp_terminales += chr(ord(columna))
                 elif count == 3:        # No Terminal Inicial
                     pass
 
@@ -60,7 +73,9 @@ class Analizador():
 
             count += 1
 
-        print(f"Nombre: {nombre}")
+        print(f"Nombre:             {nombre}")
+        print(f"No Terminales:      {no_terminal}")
+        print(f"Terminales:         {terminal}")
 
 
 

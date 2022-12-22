@@ -4,7 +4,7 @@ def main():
     # main
     archivo  = Archivo()
     # archivo.open_File()
-    archivo.cargar_Archivo("/home/bram814/Escritorio/Lenguajes/Proyecto/archivo/entrada.glc")
+    archivo.cargar_Archivo("/home/bram814/Documentos/LENGUAJES/Proyecto/lenguajes/archivo/entrada.glc")
     
 
 
