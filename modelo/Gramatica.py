@@ -8,7 +8,7 @@ fecha         Descripcion
 '''
 
 class Gramatica():    
-    __nombre                = None                                  # Nombre del archivo
+    __nombre                = []                                    # Nombre del archivo
     __no_terminal           = []                                    # No terminales
     __terminal              = []                                    # Terminales
     __no_terminal_inicial   = []                                    # No Terminal Inicial
@@ -16,12 +16,12 @@ class Gramatica():
 
 
 
-    def __init__(self, _nombre):
+    def __init__(self, _nombre, _no_terminal, _terminal, _no_terminal_inicial, _produccion):
         self.__nombre               = _nombre
-        self.__no_terminal          = []
-        self.__terminal             = []
-        self.__no_terminal_inicial  = []
-        self.__produccion           = []
+        self.__no_terminal          = _no_terminal
+        self.__terminal             = _terminal
+        self.__no_terminal_inicial  = _no_terminal_inicial
+        self.__produccion           = _produccion
 
     def get_nombre(self):
         return self.__nombre

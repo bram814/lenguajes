@@ -15,7 +15,7 @@ class Archivo():
             try:
            
                 ruta =  ""
-                filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("TXT files","*.glc"),("all files","*.*")))
+                filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("GLC files","*.glc"),("all files","*.*")))
                 ruta = filename
                 if ruta != "":
                     self.cargar_Archivo(ruta)
@@ -27,7 +27,7 @@ class Archivo():
             except IndexError as e:
                 print(e)   
 
-    def cargar_Archivo(self,ruta):
+    def cargar_Archivo(self, ruta):
         print(f"Ruta: {ruta}")
         try:
         
