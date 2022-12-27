@@ -1,3 +1,5 @@
+from modelo.Gramatica import Gramatica
+
 class Analizador():
 
 
@@ -12,9 +14,10 @@ class Analizador():
     def execute(self, _gramatica):
         
         
+
         count = 0
 
-        nombre = []
+        nombre  = []
         no_terminal = []
         terminal = []
         no_terminal_inicial = []
@@ -24,58 +27,97 @@ class Analizador():
         temp_nombre = ""
         temp_no_terminal = ""
         temp_terminales = ""
+        temp_no_terminal_inicial = ""
+        temp_producciones = ""
 
+        diccionario = {}
+
+        # ASCII - en python
+        # ord -> Equivale a un numero                   char a ord -> numero
+        # chr -> Equivale a un caracter (Char)          ord a char -> caracter
+
+        print("")
         for fila in _gramatica:
-            # chr(txt) obtiene el chart
+
             for columna in fila:
 
-                if ord(columna) == 10 : # <[10: \n ]> Salto de linea.
+                # vAscii = ord(columna)                   # numero
+                # vCaracter = chr(ord(columna))           # caracter
+                
+
+                if ord(columna) == 10:  # <[10: \n ]> Salto de linea.
 
                     if count >= 4:
-                        pass
-                    
+                        
+                        producciones.append(temp_producciones)
+                        temp_producciones = ""
+
                     continue
-                
-                if ord(columna) == 37:  # <[37: % ]>. Finaliza gramatica.
 
-                    count = -1                                  # Reiniciamos la gramatica.
+                
+                if ord(columna) == 37:  # <[37: %]> 
+                    # limpiar
+                    nombre.append(temp_nombre)
+                    temp_nombre = ""
+
+                    no_terminal.append(temp_no_terminal)
+                    temp_no_terminal = ""
+
+                    terminal.append(temp_terminales)
+                    temp_terminales = ""
+
+                    no_terminal_inicial.append(temp_no_terminal_inicial)
+                    temp_no_terminal_inicial = ""
+
+                    print(f'[Nombre]:                  {nombre}')
+                    print(f'[No Terminal]:             {no_terminal}')
+                    print(f'[Terminal]:                {terminal}')
+                    print(f'[No Terminal Inicial]:     {no_terminal_inicial}')
+                    print(f'[Producciones]:            {producciones}')
+                    print("--------------------------------")
                     
-                    nombre.append(temp_nombre)                  # guardamos los nombres.
-                    temp_nombre = ""                            # reiniciamos el temporal, para poder almacenar nuevamente el nombre de la gramatica.
+                    diccionario[nombre[0]] = Gramatica(nombre, no_terminal, terminal, no_terminal_inicial, producciones)
 
-                    no_terminal.append(temp_no_terminal)        # guardamos los no terminales.
-                    temp_no_terminal = ""                       # reinciiamos el temporal, para poder almacenar nuevamente los no terminales de la gramatica.
+                    
+                    nombre = []
+                    no_terminal = []
+                    terminal = []
+                    no_terminal_inicial = []
+                    producciones = []
 
-                    terminal.append(temp_terminales)            # guardamos los terminales.
-                    temp_terminales = ""                        # reinciiamos el temporal, para poder almacenar nuevamente los terminales de la gramatica.
+                    count = -1
+                    continue
 
-                    continue                                    # sale del for columan, y vuelve a iniciar con la siguiente fila.
 
-                
                 if count == 0:          # Nombre de archivo
                     temp_nombre += chr(ord(columna))
                 
                 elif count == 1:        # No terminales     
+                    temp_no_terminal += chr(ord(columna))
                     
-                    if ord(columna) != 44:          # <[44: , ]> 
-                        temp_no_terminal += chr(ord(columna))
-
                 elif count == 2:        # Terminales
-                    if ord(columna) != 44:          # <[44: , ]> 
-                        temp_terminales += chr(ord(columna))
+                    temp_terminales += chr(ord(columna))
+
                 elif count == 3:        # No Terminal Inicial
-                    pass
+                    temp_no_terminal_inicial += chr(ord(columna))
 
                 elif count >= 4:        # Producciones
-                    pass
+                    temp_producciones += chr(ord(columna))
             
-
-
             count += 1
 
-        print(f"Nombre:             {nombre}")
-        print(f"No Terminales:      {no_terminal}")
-        print(f"Terminales:         {terminal}")
+
+
+        entrada_gramatica = 'Grm1'
+        print("-------------------- GRAMATICA -----------------------")
+
+
+
+        print(diccionario[entrada_gramatica].get_nombre())
+        print(diccionario[entrada_gramatica].get_no_terminal())
+        print(diccionario[entrada_gramatica].get_terminal())
+        print(diccionario[entrada_gramatica].get_no_terminal_inicial())
+        print(diccionario[entrada_gramatica].get_produccion())
 
 
 

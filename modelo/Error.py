@@ -1,5 +1,4 @@
 class Error():
-
     
     
     def __init__(self, contador, fila, columna, caracter):
